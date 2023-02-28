@@ -1,0 +1,804 @@
+basePath: /api/v1
+definitions:
+  vo.Audit:
+    properties:
+      info:
+        type: string
+      ispass:
+        type: boolean
+      pid:
+        type: string
+      pname:
+        type: string
+      uid:
+        type: integer
+    type: object
+  vo.DataList:
+    properties:
+      item:
+        description: 'Required: true'
+      total:
+        description: 'Required: true'
+        type: integer
+    type: object
+  vo.Order:
+    properties:
+      createat:
+        type: string
+      money:
+        type: number
+      orderid:
+        type: integer
+      pid:
+        type: string
+      uid:
+        type: integer
+    type: object
+  vo.Project:
+    properties:
+      accumulate:
+        type: number
+      imgurl:
+        $ref: '#/definitions/vo.DataList'
+      info:
+        type: string
+      ispass:
+        type: boolean
+      pid:
+        type: string
+      pname:
+        type: string
+    type: object
+  vo.Project_Img:
+    properties:
+      id:
+        type: integer
+      imagename:
+        type: string
+      imgurl:
+        type: string
+      pid:
+        type: string
+    type: object
+  vo.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+      msg:
+        type: string
+      status:
+        type: integer
+    type: object
+  vo.TokenData:
+    properties:
+      token:
+        type: string
+      user: {}
+    type: object
+  vo.User:
+    properties:
+      avatar:
+        type: string
+      createat:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      isadmin:
+        type: boolean
+      nickname:
+        type: string
+      score:
+        type: number
+      username:
+        type: string
+    type: object
+host: 39.108.145.195:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: zhangxin
+    url: http://www.swagger.io/support
+  description: Golang work.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Raising
+  version: "1.0"
+paths:
+  /admin/audit:
+    delete:
+      consumes:
+      - application/json
+      description: 管理员功能:删除项目
+      parameters:
+      - description: 项目pid
+        in: query
+        name: pid
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 管理员功能:删除项目
+    get:
+      consumes:
+      - application/json
+      description: 获取审核项目列表
+      parameters:
+      - description: 项目名称/根据名称搜索
+        in: query
+        name: name
+        type: string
+      - description: 是否通过/yes或者no
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.DataList'
+                  - properties:
+                      item:
+                        $ref: '#/definitions/vo.Audit'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取审核项目列表
+    post:
+      consumes:
+      - application/json
+      description: 审核项目
+      parameters:
+      - description: 项目pid标识
+        in: query
+        name: pid
+        required: true
+        type: string
+      - description: 是否通过
+        in: query
+        name: isPass
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 审核项目
+  /admin/audit/:pid:
+    get:
+      consumes:
+      - application/json
+      description: 获取具体某个审核项目的信息/点击某个项目获取pid然后得到具体项目信息
+      parameters:
+      - description: 项目pid
+        in: path
+        name: pid
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/vo.Audit'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取具体某个审核项目的信息
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 登录
+      parameters:
+      - description: 用户名
+        in: formData
+        name: user_name
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.TokenData'
+                  - properties:
+                      user:
+                        $ref: '#/definitions/vo.User'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 登录并返回token
+  /order:
+    delete:
+      consumes:
+      - application/json
+      description: 取消订单
+      parameters:
+      - description: 订单id
+        in: formData
+        name: order_id
+        required: true
+        type: integer
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 取消订单
+    get:
+      consumes:
+      - application/json
+      description: 获取当前用户订单列表
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.DataList'
+                  - properties:
+                      item:
+                        $ref: '#/definitions/vo.Order'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取当前用户订单列表
+    post:
+      consumes:
+      - application/json
+      description: 创建订单
+      parameters:
+      - description: 项目pid标识
+        in: formData
+        name: pid
+        required: true
+        type: string
+      - description: 投资金额
+        in: formData
+        name: money
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/vo.Order'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 创建订单
+  /project:
+    get:
+      consumes:
+      - application/json
+      description: 获取首页项目推送列表或某个用户的项目列表
+      parameters:
+      - description: 用户uid
+        in: query
+        name: uid
+        type: integer
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.DataList'
+                  - properties:
+                      item:
+                        $ref: '#/definitions/vo.Project'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取首页项目推送列表或某个用户的项目列表
+    post:
+      consumes:
+      - application/json
+      description: 创建项目
+      parameters:
+      - description: 图片(3张)
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: 项目名称
+        in: formData
+        name: p_name
+        required: true
+        type: string
+      - description: 项目描述
+        in: formData
+        name: info
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 创建项目
+  /project/:pid:
+    get:
+      consumes:
+      - application/json
+      description: 根据pid获取具体项目信息
+      parameters:
+      - description: 项目pid
+        in: path
+        name: pid
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.Project'
+                  - properties:
+                      img_url:
+                        allOf:
+                        - $ref: '#/definitions/vo.DataList'
+                        - properties:
+                            item:
+                              $ref: '#/definitions/vo.Project_Img'
+                          type: object
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 根据pid获取具体项目信息
+  /project/search:
+    get:
+      consumes:
+      - application/json
+      description: 根据项目名称搜索
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 项目名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.DataList'
+                  - properties:
+                      item:
+                        $ref: '#/definitions/vo.Project'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 根据项目名称搜索
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: 注册
+      parameters:
+      - description: 用户名
+        in: formData
+        name: user_name
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: 邮箱
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: 手机号码
+        in: formData
+        name: phone
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 注册用户名和密码
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      parameters:
+      - description: 用户id
+        in: query
+        name: id
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/vo.User'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取用户信息
+    put:
+      consumes:
+      - application/json
+      description: 修改用户信息
+      parameters:
+      - description: 昵称
+        in: formData
+        name: nick_name
+        required: true
+        type: string
+      - description: 手机号
+        in: formData
+        name: phone
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/vo.User'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 修改用户信息
+  /user/audit:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户正在审核的项目
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/vo.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/vo.DataList'
+                  - properties:
+                      item:
+                        $ref: '#/definitions/vo.Audit'
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 获取用户正在审核的项目
+  /user/email:
+    post:
+      consumes:
+      - application/json
+      description: 发送验证邮件
+      parameters:
+      - description: 操作类型/1-绑定邮箱/2-解绑邮箱/3-修改密码
+        in: formData
+        name: operation_type
+        required: true
+        type: integer
+      - description: 目标邮箱
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: 修改后的密码
+        in: formData
+        name: passwrod
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 发送验证邮件
+  /user/email/:token:
+    get:
+      consumes:
+      - application/json
+      description: 验证邮件
+      parameters:
+      - description: 验证token
+        in: path
+        name: token
+        required: true
+        type: string
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 验证邮件
+  /user/pay:
+    post:
+      consumes:
+      - application/json
+      description: 支付
+      parameters:
+      - description: 订单id
+        in: formData
+        name: order_id
+        required: true
+        type: integer
+      - description: 支付金额
+        in: formData
+        name: money
+        required: true
+        type: integer
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 支付
+  /user/upload_ava:
+    post:
+      consumes:
+      - application/json
+      description: 上传用户头像
+      parameters:
+      - description: 头像
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vo.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/vo.Response'
+      summary: 上传用户头像
+swagger: "2.0"
