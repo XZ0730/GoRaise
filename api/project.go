@@ -37,7 +37,11 @@ func Create_Project(c *gin.Context) {
 		c.JSON(http.StatusOK, rsp)
 	} else {
 		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+<<<<<<< HEAD
 		util.LogrusObj.Info("[uploadProject]", err)
+=======
+		util.ReLogrusObj(util.Path).Warn("[uploadProject]", err)
+>>>>>>> fd910d7 (golang)
 	}
 }
 
@@ -81,6 +85,10 @@ func GetProject(c *gin.Context) {
 	} else {
 		id, err := strconv.Atoi(uid)
 		if err != nil {
+<<<<<<< HEAD
+=======
+			util.ReLogrusObj(util.Path).Warn("[uid error]", err)
+>>>>>>> fd910d7 (golang)
 			c.JSON(http.StatusBadRequest, ErrorResponse(err))
 		}
 		rsp = service.GetProjectByUid(c, uint(id))

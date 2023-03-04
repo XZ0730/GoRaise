@@ -30,7 +30,11 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusOK, rsp)
 	} else {
 		c.JSON(http.StatusBadRequest, err)
+<<<<<<< HEAD
 		util.LogrusObj.Info("[register]:", err)
+=======
+		util.ReLogrusObj(util.Path).Info("[register]:", err)
+>>>>>>> fd910d7 (golang)
 	}
 }
 
@@ -157,7 +161,11 @@ func SendEmail(c *gin.Context) {
 		c.JSON(http.StatusOK, rsp)
 	} else {
 		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+<<<<<<< HEAD
 		util.LogrusObj.Info("[send email]", err)
+=======
+		util.ReLogrusObj(util.Path).Info("[send email]", err)
+>>>>>>> fd910d7 (golang)
 	}
 }
 

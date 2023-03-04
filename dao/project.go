@@ -3,7 +3,10 @@ package dao
 import (
 	"Raising/model"
 	"context"
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 
 	"gorm.io/gorm"
 )
@@ -24,7 +27,10 @@ func NewProjectDaoByDB(db *gorm.DB) *ProjectDao {
 // 判断项目是否存在
 func (dao *ProjectDao) ExistOrNotProjectname(Pname string) (project *model.Project, ok bool) {
 	db := dao.DB.Model(&model.User{}).Where("p_name=?", Pname).Find(&project)
+<<<<<<< HEAD
 	fmt.Println(project)
+=======
+>>>>>>> fd910d7 (golang)
 	if db.RowsAffected == 0 {
 		return project, false
 	}

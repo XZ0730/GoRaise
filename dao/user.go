@@ -3,7 +3,10 @@ package dao
 import (
 	"Raising/model"
 	"context"
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 
 	"gorm.io/gorm"
 )
@@ -23,22 +26,34 @@ func NewUserDaoByDB(db *gorm.DB) *UserDao {
 
 func (dao *UserDao) ExistOrNotUsername(userName string) (user *model.User, ok bool) {
 	db := dao.DB.Model(&model.User{}).Where("user_name=?", userName).Find(&user)
+<<<<<<< HEAD
 	fmt.Println(user)
 	if db.RowsAffected == 0 {
 		//fmt.Println("=====================")
 		return user, false
 	}
 	//fmt.Println("=====================")
+=======
+	if db.RowsAffected == 0 {
+		return user, false
+	}
+>>>>>>> fd910d7 (golang)
 	return user, true
 }
 func (dao *UserDao) ExistOrNotPhoneNum(phone string) (user *model.User, ok bool) {
 	db := dao.DB.Model(&model.User{}).Where("phone_number=?", phone).Find(&user)
+<<<<<<< HEAD
 	fmt.Println(user)
 	if db.RowsAffected == 0 {
 		//	fmt.Println("=====================")
 		return user, false
 	}
 	//fmt.Println("=====================")
+=======
+	if db.RowsAffected == 0 {
+		return user, false
+	}
+>>>>>>> fd910d7 (golang)
 	return user, true
 }
 func (dao *UserDao) CreateUser(user *model.User) error {

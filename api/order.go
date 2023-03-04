@@ -31,7 +31,11 @@ func Create_Order(c *gin.Context) {
 	} else {
 
 		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+<<<<<<< HEAD
 		util.LogrusObj.Info("[order create]", err)
+=======
+		util.ReLogrusObj(util.Path).Info("[order create]", err)
+>>>>>>> fd910d7 (golang)
 	}
 }
 
@@ -76,6 +80,10 @@ func DeleteOrder(c *gin.Context) {
 		c.JSON(http.StatusOK, rsp)
 	} else {
 		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+<<<<<<< HEAD
 		util.LogrusObj.Info("[order delete]", err)
+=======
+		util.ReLogrusObj(util.Path).Warn("[order delete]", err)
+>>>>>>> fd910d7 (golang)
 	}
 }

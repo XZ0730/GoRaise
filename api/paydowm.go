@@ -29,6 +29,10 @@ func PayDown(c *gin.Context) {
 		c.JSON(http.StatusOK, rsp)
 	} else {
 		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+<<<<<<< HEAD
 		util.LogrusObj.Info("[payfor]", err)
+=======
+		util.ReLogrusObj(util.Path).Warn("[payfor]", err)
+>>>>>>> fd910d7 (golang)
 	}
 }

@@ -1,7 +1,10 @@
 package util
 
 import (
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -54,13 +57,19 @@ func ParseToken(token string) (*Claims, error) {
 			return claims, nil
 		}
 	}
+<<<<<<< HEAD
 	fmt.Println("=================1212121")
+=======
+>>>>>>> fd910d7 (golang)
 	return nil, err
 }
 func GenerateEmailToken(userId, OperationType uint, email, password string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(24 * time.Hour)
+<<<<<<< HEAD
 	fmt.Println("11111")
+=======
+>>>>>>> fd910d7 (golang)
 	claims := EmailClaims{
 		UserID:        userId,
 		Email:         email,
@@ -73,11 +82,16 @@ func GenerateEmailToken(userId, OperationType uint, email, password string) (str
 			Subject:   "email token",
 		},
 	}
+<<<<<<< HEAD
 	fmt.Println("22222")
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	fmt.Println("33333")
 	token, err := tokenClaims.SignedString(jwtSecret)
 	fmt.Println(err)
+=======
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token, err := tokenClaims.SignedString(jwtSecret)
+>>>>>>> fd910d7 (golang)
 	return token, err
 }
 func ParseEmailToken(token string) (*EmailClaims, error) {

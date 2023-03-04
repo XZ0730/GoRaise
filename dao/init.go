@@ -2,7 +2,10 @@ package dao
 
 import (
 	"context"
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -34,10 +37,16 @@ func Database(conn string) {
 			SingularTable: true,
 		},
 	})
+<<<<<<< HEAD
 	fmt.Println("here")
 	if err != nil {
 		fmt.Println(conn)
 		fmt.Println("SSSSS22222")
+=======
+
+	if err != nil {
+
+>>>>>>> fd910d7 (golang)
 		panic(err)
 	}
 	sqlDB, _ := db.DB()

@@ -9,7 +9,10 @@ import (
 	"Raising/util"
 	"Raising/vo"
 	"context"
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 )
 
 type AuditService struct {
@@ -20,7 +23,10 @@ var filename1 = make([]string, 5)
 
 // 审核项目 pid用query传进来
 func (service *AuditService) Audit_Project(ctx context.Context, pid string, isPass string) vo.Response {
+<<<<<<< HEAD
 	fmt.Println("112312312312312312312312")
+=======
+>>>>>>> fd910d7 (golang)
 	code = e.Success
 	var project *model.Project
 	audit := &model.Audit{
@@ -44,7 +50,11 @@ func (service *AuditService) Audit_Project(ctx context.Context, pid string, isPa
 	UserScore, err := cache.RedisClient.ZScore(util.Key, util.GetKey(audit.Uid)).Result()
 	if err != nil {
 		code = e.ErrorRedis
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> fd910d7 (golang)
 		return vo.Response{
 			Status: code,
 			Msg:    e.GetMsg(code),
@@ -116,13 +126,17 @@ func (service *AuditService) Audit_Project(ctx context.Context, pid string, isPa
 }
 func FileDelet(imgs []*model.Project_Img) {
 
+<<<<<<< HEAD
 	fmt.Println(imgs)
+=======
+>>>>>>> fd910d7 (golang)
 	for _, img := range imgs {
 		if img == nil {
 			break
 		}
 		filename1 = append(filename1, img.Img_name)
 	}
+<<<<<<< HEAD
 	fmt.Println("--------------------------")
 	err := util.DeleteFiles(filename1)
 	if err != nil {
@@ -130,6 +144,12 @@ func FileDelet(imgs []*model.Project_Img) {
 		fmt.Println(err)
 	}
 	fmt.Println("=========================")
+=======
+	err := util.DeleteFiles(filename1)
+	if err != nil {
+		util.ReLogrusObj(util.Path).Info("[qiniu error]删除云文件失败")
+	}
+>>>>>>> fd910d7 (golang)
 	wg.Done()
 }
 

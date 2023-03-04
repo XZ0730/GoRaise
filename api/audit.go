@@ -31,7 +31,11 @@ func Audit_Project(c *gin.Context) {
 	ispass, ok1 := c.GetQuery("isPass")
 
 	if !ok || !ok1 {
+<<<<<<< HEAD
 		util.LogrusObj.Info("invalid query params")
+=======
+		util.ReLogrusObj(util.Path).Info("invalid query params")
+>>>>>>> fd910d7 (golang)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"msg":    e.GetMsg(e.InvalidParams),
 			"status": e.InvalidParams,

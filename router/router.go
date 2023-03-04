@@ -3,6 +3,10 @@ package router
 import (
 	"Raising/api"
 	"Raising/middleware"
+<<<<<<< HEAD
+=======
+	"Raising/util"
+>>>>>>> fd910d7 (golang)
 
 	_ "Raising/docs"
 
@@ -19,6 +23,10 @@ func NewRouter() *gin.Engine {
 	{
 		//测试
 		v1.GET("/ping", func(c *gin.Context) {
+<<<<<<< HEAD
+=======
+			util.ReLogrusObj(util.Path).Info("log:---222---==================---------")
+>>>>>>> fd910d7 (golang)
 			c.JSON(200, "success")
 		})
 		v1.POST("/register", api.UserRegister)

@@ -4,7 +4,10 @@ import (
 	"Raising/conf"
 	"Raising/pkg/e"
 	"context"
+<<<<<<< HEAD
 	"fmt"
+=======
+>>>>>>> fd910d7 (golang)
 	"mime/multipart"
 
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
@@ -17,15 +20,23 @@ func UploadToQiNiu(file multipart.File, fileheader *multipart.FileHeader, fileSi
 	var SerectKey = conf.SerectKey
 	var Bucket = conf.Bucket
 	var ImgUrl = conf.QiniuServer
+<<<<<<< HEAD
 	fmt.Println(AccessKey)
 	fmt.Println(SerectKey)
+=======
+
+>>>>>>> fd910d7 (golang)
 	putPlicy := storage.PutPolicy{
 		Scope: Bucket,
 	}
 	mac := qbox.NewMac(AccessKey, SerectKey)
+<<<<<<< HEAD
 	fmt.Println("mac:", mac)
 	upToken := putPlicy.UploadToken(mac)
 	fmt.Println("uptoken:", upToken)
+=======
+	upToken := putPlicy.UploadToken(mac)
+>>>>>>> fd910d7 (golang)
 	cfg := storage.Config{
 		Zone:          &storage.ZoneHuanan,
 		UseCdnDomains: false,

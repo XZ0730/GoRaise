@@ -8,7 +8,11 @@ import (
 type User struct {
 	gorm.Model
 	UserName    string  `gorm:"unique"` //登录用户名
+<<<<<<< HEAD
 	Passwrod    string  //密码
+=======
+	Password    string  //密码
+>>>>>>> fd910d7 (golang)
 	Email       string  //邮箱
 	PhoneNumber string  //联系电话
 	NickName    string  //昵称
@@ -26,10 +30,18 @@ const (
 
 func (u *User) Setpwd(password string) error {
 	bcry, err := bcrypt.GenerateFromPassword([]byte(password), PwdCost)
+<<<<<<< HEAD
 	u.Passwrod = string(bcry)
 	return err
 }
 func (u *User) CheckPwd(passwrod string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Passwrod), []byte(passwrod))
+=======
+	u.Password = string(bcry)
+	return err
+}
+func (u *User) CheckPwd(passwrod string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(passwrod))
+>>>>>>> fd910d7 (golang)
 	return err == nil
 }

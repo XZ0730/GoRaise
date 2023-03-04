@@ -21,7 +21,11 @@ func NewOrderDaoByDB(db *gorm.DB) *OrderDao {
 }
 func (dao *OrderDao) GetOrderByUid(uid uint) (order []*model.Order, err error) {
 	//获取用户订单
+<<<<<<< HEAD
 	err = dao.DB.Model(&model.Order{}).Where("uid=?", uid).Find(&order).Error
+=======
+	err = dao.DB.Model(&model.Order{}).Where("uid=? AND deleted_at IS NULL", uid).Find(&order).Error
+>>>>>>> fd910d7 (golang)
 	return
 }
 func (dao *OrderDao) GetOrderById(id uint) (order *model.Order, err error) {

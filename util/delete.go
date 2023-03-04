@@ -14,7 +14,10 @@ func DeleteFile(filename string) error {
 	var Bucket = conf.Bucket
 
 	mac := qbox.NewMac(AccessKey, SerectKey)
+<<<<<<< HEAD
 	fmt.Println("mmaacc", mac)
+=======
+>>>>>>> fd910d7 (golang)
 	cfg := storage.Config{
 		Zone:          &storage.ZoneHuanan,
 		UseCdnDomains: false,
@@ -57,12 +60,18 @@ func DeleteFiles(filename []string) error {
 		if _, ok := err.(*storage.ErrorInfo); ok {
 			for _, ret := range rets {
 				if ret.Code != 200 {
+<<<<<<< HEAD
 					fmt.Println("ret.Data.Error:", ret.Data.Error)
+=======
+>>>>>>> fd910d7 (golang)
 					return fmt.Errorf(ret.Data.Error)
 				}
 			}
 		} else {
+<<<<<<< HEAD
 			fmt.Println("err:", err)
+=======
+>>>>>>> fd910d7 (golang)
 			return err
 		}
 
